@@ -1,6 +1,6 @@
 package es.zed.application.service;
 
-import es.zed.common.service.utils.CustomObjectMapper;
+import es.zed.common.utils.CustomObjectMapper;
 import es.zed.domain.input.PokeDbInputPort;
 import es.zed.domain.output.api.PokeDbOutputPort;
 import es.zed.domain.output.object.AbilityObject;

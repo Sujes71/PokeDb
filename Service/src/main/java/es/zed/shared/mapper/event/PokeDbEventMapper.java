@@ -1,7 +1,7 @@
 package es.zed.shared.mapper.event;
 
-import es.zed.common.service.utils.EventMapper;
-import es.zed.common.service.utils.UuidUtils;
+import es.zed.common.utils.EventMapper;
+import es.zed.common.utils.UuidUtils;
 import es.zed.dto.response.AbilityResponseDto;
 import es.zed.event.pokedb.AbilityCreatedEvent;
 import es.zed.event.pokedb.AbilityCreatedEventBody;

@@ -1,6 +1,6 @@
 package es.zed.infrastructure.api.endpoint;
 
-import es.zed.common.service.abstracts.AbstractEnpoint;
+import es.zed.common.abstracts.AbstractEnpoint;
 import es.zed.domain.output.api.PokeDbOutputPort;
 import es.zed.dto.response.AbilityResponseDto;
 import org.springframework.http.HttpMethod;
