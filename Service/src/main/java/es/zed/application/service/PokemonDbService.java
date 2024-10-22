@@ -2,16 +2,11 @@ package es.zed.application.service;
 
 import es.zed.domain.input.PokeDbInputPort;
 import es.zed.domain.output.api.PokeDbOutputPort;
-import es.zed.domain.output.object.AbilityObject;
 import es.zed.domain.output.object.PokemonObject;
 import es.zed.dto.PokemonDto;
 import es.zed.dto.response.AbilityResponseDto;
 import es.zed.dto.response.PokemonResponseDto;
-import es.zed.enums.StatusType;
-import es.zed.infrastructure.adapter.AbilityRepositoryAdapter;
 import es.zed.infrastructure.adapter.PokemonRepositoryAdapter;
-import es.zed.infrastructure.controller.AmqpController;
-import es.zed.shared.mapper.event.PokeDbEventMapper;
 import es.zed.shared.utils.Constants;
 import es.zed.utils.CustomObjectMapper;
 import java.util.HashMap;
@@ -41,11 +36,6 @@ public class PokemonDbService implements PokeDbInputPort {
   private final PokemonRepositoryAdapter pokemonRepositoryAdapter;
 
   /**
-   * Ability repository adapter.
-   */
-  private final AbilityRepositoryAdapter abilityRepositoryAdapter;
-
-  /**
    * Mapper.
    */
   private final CustomObjectMapper mapper;
@@ -54,16 +44,6 @@ public class PokemonDbService implements PokeDbInputPort {
    * Poke db output port.
    */
   private final PokeDbOutputPort pokeDbOutputPort;
-
-  /**
-   * Amqp controller.
-   */
-  private final AmqpController amqpController;
-
-  /**
-   * Amqp controller.
-   */
-  private final PokeDbEventMapper eventMapper;
 
   /**
    * Get pokemon.

@@ -1,6 +1,5 @@
 package es.zed.infrastructure.controller;
 
-import es.zed.config.JwtBearerToken;
 import es.zed.domain.input.PokeDbInputPort;
 import es.zed.dto.response.AbilityResponseDto;
 import es.zed.dto.response.PokemonResponseDto;
@@ -9,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

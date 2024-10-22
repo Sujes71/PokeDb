@@ -39,9 +39,4 @@ public class Constants {
    * nid.
    */
   public static final String NID_URL_FILTER = "{nid}";
-
-  /**
-   * nid.
-   */
-  public static final String STATUS_HEADER = "x-status";
 }

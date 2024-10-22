@@ -6,7 +6,6 @@ import es.zed.domain.output.entity.UserRoleEntity;
 import es.zed.domain.output.repository.UserRepository;
 import es.zed.domain.output.repository.UserRoleRepository;
 import es.zed.security.JwtService;
-import io.jsonwebtoken.JwtException;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
