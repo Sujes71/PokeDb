@@ -24,4 +24,9 @@ public class UserEntity {
    */
   private String password;
 
+  /**
+   * Role id.
+   */
+  private String roleId;
+
 }

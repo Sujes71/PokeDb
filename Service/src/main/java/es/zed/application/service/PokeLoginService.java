@@ -1,14 +1,18 @@
 package es.zed.application.service;
 
+import es.zed.config.JwtBearerToken;
 import es.zed.domain.input.PokeLoginInputPort;
-import es.zed.domain.output.entity.UserRoleEntity;
+import es.zed.domain.output.repository.RolesRepository;
 import es.zed.domain.output.repository.UserRepository;
-import es.zed.domain.output.repository.UserRoleRepository;
 import es.zed.dto.request.LoginRequestDto;
 import es.zed.respmodel.ReqRespModel;
 import es.zed.security.JwtService;
-import java.util.HashMap;
-import java.util.Map;
+import es.zed.security.enums.AccessRoleEnum;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.LinkedList;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,9 +30,9 @@ public class PokeLoginService implements PokeLoginInputPort {
   private final UserRepository userRepository;
 
   /**
-   * user role repository.
+   * roles repository.
    */
-  private final UserRoleRepository userRoleRepository;
+  private final RolesRepository rolesRepository;
 
   /**
    * jwt service.
@@ -38,13 +42,13 @@ public class PokeLoginService implements PokeLoginInputPort {
   /**
    * Constructor.
    * @param userRepository user repository.
-   * @param userRoleRepository user role repository.
+   * @param rolesRepository roles repository.
    * @param jwtService jwtService.
    */
-  public PokeLoginService(UserRepository userRepository, UserRoleRepository userRoleRepository,
+  public PokeLoginService(UserRepository userRepository, RolesRepository rolesRepository,
       JwtService jwtService) {
     this.userRepository = userRepository;
-    this.userRoleRepository = userRoleRepository;
+    this.rolesRepository = rolesRepository;
     this.jwtService = jwtService;
   }
 
@@ -58,20 +62,22 @@ public class PokeLoginService implements PokeLoginInputPort {
   public Mono<ResponseEntity<ReqRespModel<String>>> login(LoginRequestDto requestDto) {
     return userRepository.findById(requestDto.getUsername())
         .flatMap(user -> {
+          // Verificación de la contraseña
           if (!user.getPassword().equals(requestDto.getPassword())) {
             return Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(new ReqRespModel<String>(null, "Invalid Credentials")));
           }
 
-          return userRoleRepository.findByUsername(user.getUsername())
-              .collectList()
-              .flatMap(userRoles -> {
-                Map<String, Object> claims = new HashMap<>();
-                claims.put("roles", userRoles.stream()
-                    .map(UserRoleEntity::getRoleId)
-                    .toList());
-
-                String token = jwtService.generateToken(user.getUsername(), claims);
+          return rolesRepository.findById(user.getRoleId())
+              .flatMap(role -> {
+                String token = jwtService.createJwtFromSpec(new JwtBearerToken(
+                    null,
+                    ZonedDateTime.ofInstant(Instant.now().plus(1, ChronoUnit.HOURS), ZoneOffset.UTC),
+                    user.getUsername(),
+                    user.getUsername(),
+                    AccessRoleEnum.valueOf(role.getId()),
+                    new LinkedList<>()
+                ));
 
                 return Mono.just(ResponseEntity.ok(new ReqRespModel<String>(token, null)));
               });
@@ -79,6 +85,4 @@ public class PokeLoginService implements PokeLoginInputPort {
         .switchIfEmpty(Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED)
             .body(new ReqRespModel<String>(null, "Invalid Username"))));
   }
-
-
 }

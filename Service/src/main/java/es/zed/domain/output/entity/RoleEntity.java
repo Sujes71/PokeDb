@@ -8,26 +8,21 @@ import org.springframework.data.relational.core.mapping.Table;
 /**
  * user roles.
  */
-@Table("user_roles")
+@Table("roles")
 @NoArgsConstructor
 @Data
-public class UserRoleEntity {
+public class RoleEntity {
 
   /**
    * id.
    */
   @Id
-  private Long id;
+  private String id;
 
   /**
    * username.
    */
   private String username;
-
-  /**
-   * role id.
-   */
-  private String roleId;
 
 }
 

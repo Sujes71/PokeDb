@@ -5,6 +5,7 @@ import es.zed.shared.security.AuthManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -16,6 +17,7 @@ import org.springframework.security.web.server.authentication.AuthenticationWebF
  */
 @Configuration
 @EnableWebFluxSecurity
+@EnableReactiveMethodSecurity
 public class SecurityFluxConfig {
 
   /**
@@ -38,7 +40,6 @@ public class SecurityFluxConfig {
         .cors(ServerHttpSecurity.CorsSpec::disable)
         .authorizeExchange(exchange -> exchange
             .pathMatchers(HttpMethod.POST, "/api/login").permitAll()
-            .pathMatchers("/api/pokemon").hasAnyAuthority("ADMIN")
             .anyExchange().authenticated())
         .addFilterAt(jwtFilter, SecurityWebFiltersOrder.AUTHORIZATION);
 

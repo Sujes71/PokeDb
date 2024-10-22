@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -50,6 +51,7 @@ public class PokemonDbService implements PokeDbInputPort {
    *
    * @return response.
    */
+  @PreAuthorize("hasAuthority('ADMIN')")
   @Override
   public Mono<PokemonResponseDto> getPokemon() {
     Flux<PokemonObject> pokemonObject = pokemonRepositoryAdapter.findAll().map(PokemonObject::fromEntityToObject);
