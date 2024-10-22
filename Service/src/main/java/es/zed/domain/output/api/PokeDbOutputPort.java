@@ -11,7 +11,8 @@ public interface PokeDbOutputPort {
    * Do call get pokemon.
    *
    * @param url url.
+   * @param auth auth.
    * @return response.
    */
-  AbilityResponseDto doCallGetPokemon(final String url);
+  AbilityResponseDto doCallGetPokemon(final String url, final String auth);
 }

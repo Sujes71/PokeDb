@@ -23,6 +23,11 @@ public class Constants {
   /**
    * pokemon url.
    */
+  public static final String POKE_DB_LOGIN = "/login";
+
+  /**
+   * pokemon url.
+   */
   public static final String POKE_DB_ABILITY_NID = POKE_DB_ABILITY +  "/{nid}";
 
   /**

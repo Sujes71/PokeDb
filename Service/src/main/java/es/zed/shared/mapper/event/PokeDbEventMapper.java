@@ -1,10 +1,10 @@
 package es.zed.shared.mapper.event;
 
-import es.zed.common.utils.EventMapper;
-import es.zed.common.utils.UuidUtils;
 import es.zed.dto.response.AbilityResponseDto;
-import es.zed.event.pokedb.AbilityCreatedEvent;
-import es.zed.event.pokedb.AbilityCreatedEventBody;
+import es.zed.pokedb.AbilityCreatedEvent;
+import es.zed.pokedb.AbilityCreatedEventBody;
+import es.zed.utils.EventMapper;
+import es.zed.utils.UuidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,6 @@
 package es.zed.domain.input;
 
-import es.zed.event.pokeapi.PokeCreatedEvent;
+import es.zed.pokeapi.PokeCreatedEvent;
 
 /**
  * poke db handler port.

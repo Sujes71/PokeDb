@@ -20,16 +20,9 @@ public interface PokeDbInputPort {
    * Get ability.
    *
    * @param nid nid.
+   * @param auth auth.
    * @return response.
    */
-  AbilityResponseDto getAbility(final String nid);
-
-  /**
-   * Post ability.
-   *
-   * @param nid nid.
-   * @param status status.
-   */
-  void postAbility(final String nid, final String status);
+  AbilityResponseDto getAbility(final String nid, final String auth);
 
 }

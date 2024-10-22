@@ -1,6 +1,5 @@
 package es.zed.application.service;
 
-import es.zed.common.utils.CustomObjectMapper;
 import es.zed.domain.input.PokeDbInputPort;
 import es.zed.domain.output.api.PokeDbOutputPort;
 import es.zed.domain.output.object.AbilityObject;
@@ -14,6 +13,7 @@ import es.zed.infrastructure.adapter.PokemonRepositoryAdapter;
 import es.zed.infrastructure.controller.AmqpController;
 import es.zed.shared.mapper.event.PokeDbEventMapper;
 import es.zed.shared.utils.Constants;
+import es.zed.utils.CustomObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -86,33 +86,12 @@ public class PokemonDbService implements PokeDbInputPort {
    * @return response.
    */
   @Override
-  public AbilityResponseDto getAbility(String nid) {
+  public AbilityResponseDto getAbility(final String nid, final String auth) {
     Map<String, String> replacements = new HashMap<>();
     replacements.put(Constants.NID_URL_FILTER, nid);
 
     return pokeDbOutputPort.doCallGetPokemon(mapper.mapUrl(replacements,
-        basePath.concat(Constants.POKE_DB_POKEMON_NID)));
-  }
-
-  /**
-   * Post ability.
-   *
-   * @param nid nid.
-   * @param status status.
-   */
-  @Override
-  public void postAbility(final String nid, final String status) {
-    if (status.equals(StatusType.GOING.name())) {
-      amqpController.publish(eventMapper.buildEvent(getAbility(nid)));
-      return;
-    }
-    AbilityResponseDto abilityResponseDto = getAbility(nid);
-
-    this.abilityRepositoryAdapter.save(AbilityObject
-        .builder()
-            .name(abilityResponseDto.getAbilities().get(0).getAbility().getName())
-            .url(abilityResponseDto.getAbilities().get(0).getAbility().getUrl())
-        .build());
+        basePath.concat(Constants.POKE_DB_POKEMON_NID)), auth);
   }
 
 }

@@ -1,9 +1,9 @@
 package es.zed.infrastructure.controller;
 
+import es.zed.common.AbstractEvent;
 import es.zed.controller.AbstractAmqpController;
 import es.zed.domain.input.PokeDbHandlerPort;
-import es.zed.event.common.AbstractEvent;
-import es.zed.event.pokeapi.PokeCreatedEvent;
+import es.zed.pokeapi.PokeCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;

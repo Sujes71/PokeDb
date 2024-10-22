@@ -1,5 +1,6 @@
 package es.zed.infrastructure.controller;
 
+import es.zed.config.JwtBearerToken;
 import es.zed.domain.input.PokeDbInputPort;
 import es.zed.dto.response.AbilityResponseDto;
 import es.zed.dto.response.PokemonResponseDto;
@@ -41,23 +42,12 @@ public class PokeDbController {
    * Method to get the pokemon by id.
    *
    * @param nid nid.
+   * @param auth auth.
    * @return the pokemon.
    */
   @GetMapping(path = Constants.POKE_DB_ABILITY_NID, produces = MediaType.APPLICATION_JSON_VALUE)
-  private AbilityResponseDto getAbility(@PathVariable final String nid) {
-    return pokeDbInputPort.getAbility(nid);
+  private AbilityResponseDto getAbility(@PathVariable final String nid,
+      @RequestHeader(name = "Authorization") String auth) {
+    return pokeDbInputPort.getAbility(nid, auth);
   }
-
-  /**
-   * Method to get the pokemon by id.
-   *
-   * @param nid nid.
-   * @param status status.
-   */
-  @PostMapping(path = Constants.POKE_DB_ABILITY_NID, produces = MediaType.APPLICATION_JSON_VALUE)
-  private void postAbility(@PathVariable final String nid,
-      @RequestHeader(value = Constants.STATUS_HEADER, defaultValue = "GOING") final String status) {
-    pokeDbInputPort.postAbility(nid, status);
-  }
-
 }
