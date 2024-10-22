@@ -1,13 +1,13 @@
 package es.zed.application.service;
 
-import es.zed.config.JwtBearerToken;
 import es.zed.domain.input.PokeLoginInputPort;
 import es.zed.domain.output.repository.RolesRepository;
 import es.zed.domain.output.repository.UserRepository;
 import es.zed.dto.request.LoginRequestDto;
+import es.zed.enums.AccessRoleEnum;
 import es.zed.respmodel.ReqRespModel;
+import es.zed.security.JwtBearerToken;
 import es.zed.security.JwtService;
-import es.zed.security.enums.AccessRoleEnum;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
