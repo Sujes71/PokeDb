@@ -1,5 +1,6 @@
 package es.zed.domain.input;
 
+import es.zed.config.PokeAuthentication;
 import es.zed.dto.response.AbilityResponseDto;
 import es.zed.dto.response.PokemonResponseDto;
 import es.zed.respmodel.ReqRespModel;
@@ -25,6 +26,6 @@ public interface PokeDbInputPort {
    * @param auth auth.
    * @return response.
    */
-  ResponseEntity<ReqRespModel<AbilityResponseDto>> getAbility(final String nid, final String auth);
+  ResponseEntity<ReqRespModel<AbilityResponseDto>> getAbility(final String nid, final PokeAuthentication auth);
 
 }

@@ -4,10 +4,10 @@ import es.zed.domain.input.PokeLoginInputPort;
 import es.zed.domain.output.repository.RolesRepository;
 import es.zed.domain.output.repository.UserRepository;
 import es.zed.dto.request.LoginRequestDto;
-import es.zed.enums.AccessRoleEnum;
 import es.zed.respmodel.ReqRespModel;
 import es.zed.security.JwtBearerToken;
 import es.zed.security.JwtService;
+import es.zed.utils.UuidUtils;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -70,13 +70,13 @@ public class PokeLoginService implements PokeLoginInputPort {
 
           return rolesRepository.findById(user.getRoleId())
               .flatMap(role -> {
+                LinkedList<String> authorities = new LinkedList<>();
+                authorities.add(role.getId());
                 String token = jwtService.createJwtFromSpec(new JwtBearerToken(
-                    null,
+                    UuidUtils.newUuid(),
                     ZonedDateTime.ofInstant(Instant.now().plus(1, ChronoUnit.HOURS), ZoneOffset.UTC),
                     user.getUsername(),
-                    user.getUsername(),
-                    AccessRoleEnum.valueOf(role.getId()),
-                    new LinkedList<>()
+                    authorities
                 ));
 
                 return Mono.just(ResponseEntity.ok(new ReqRespModel<String>(token, "Success")));

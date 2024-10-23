@@ -1,5 +1,6 @@
 package es.zed.application.service;
 
+import es.zed.config.PokeAuthentication;
 import es.zed.domain.input.PokeDbInputPort;
 import es.zed.domain.output.api.PokeDbOutputPort;
 import es.zed.domain.output.object.PokemonObject;
@@ -8,6 +9,7 @@ import es.zed.dto.response.AbilityResponseDto;
 import es.zed.dto.response.PokemonResponseDto;
 import es.zed.infrastructure.adapter.PokemonRepositoryAdapter;
 import es.zed.respmodel.ReqRespModel;
+import es.zed.security.JwtService;
 import es.zed.shared.utils.Constants;
 import es.zed.utils.CustomObjectMapper;
 import java.util.HashMap;
@@ -49,6 +51,11 @@ public class PokemonDbService implements PokeDbInputPort {
   private final PokeDbOutputPort pokeDbOutputPort;
 
   /**
+   * Jwt service.
+   */
+  private final JwtService jwtService;
+
+  /**
    * Get pokemon.
    *
    * @return response.
@@ -75,10 +82,11 @@ public class PokemonDbService implements PokeDbInputPort {
    * @return response.
    */
   @Override
-  public ResponseEntity<ReqRespModel<AbilityResponseDto>> getAbility(final String nid, final String auth) {
+  public ResponseEntity<ReqRespModel<AbilityResponseDto>> getAbility(final String nid, final PokeAuthentication auth) {
     Map<String, String> replacements = new HashMap<>();
     replacements.put(Constants.NID_URL_FILTER, nid);
     return ResponseEntity.ok(new ReqRespModel<>(pokeDbOutputPort.doCallGetInternalPokemon(
-        mapper.mapUrl(replacements, basePath.concat(Constants.POKE_DB_POKEMON_NID)), auth), "Success"));
+        mapper.mapUrl(replacements, basePath.concat(Constants.POKE_DB_POKEMON_NID)),
+        jwtService.createJwtFromSpec(auth.getJwtBearerToken())), "Success"));
   }
 }
