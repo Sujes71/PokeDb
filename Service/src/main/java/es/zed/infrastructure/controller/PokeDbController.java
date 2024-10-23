@@ -1,10 +1,10 @@
 package es.zed.infrastructure.controller;
 
-import es.zed.config.PokeAuthentication;
 import es.zed.domain.input.PokeDbInputPort;
 import es.zed.dto.response.AbilityResponseDto;
 import es.zed.dto.response.PokemonResponseDto;
 import es.zed.respmodel.ReqRespModel;
+import es.zed.security.PokeAuthentication;
 import es.zed.shared.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;

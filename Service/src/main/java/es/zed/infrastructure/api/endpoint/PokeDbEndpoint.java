@@ -1,5 +1,6 @@
 package es.zed.infrastructure.api.endpoint;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import es.zed.abstracts.AbstractEnpoint;
 import es.zed.domain.output.api.PokeDbOutputPort;
 import es.zed.dto.response.AbilityResponseDto;
@@ -25,13 +26,14 @@ public class PokeDbEndpoint extends AbstractEnpoint implements PokeDbOutputPort 
   }
 
   /**
-   * Do call get pokemon.
+   * Do call get internal pokemon.
    *
    * @param url url.
+   * @param auth auth.
    * @return response.
    */
   @Override
   public AbilityResponseDto doCallGetInternalPokemon(final String url, final String auth) {
-    return doCallInternal(url, HttpMethod.GET, addDefaultHeaders(auth), null, AbilityResponseDto.class);
+    return doCallInternal(url, HttpMethod.GET, addDefaultHeaders(auth), null, new TypeReference<>() {});
   }
 }

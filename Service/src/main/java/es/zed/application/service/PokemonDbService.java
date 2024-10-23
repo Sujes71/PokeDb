@@ -1,6 +1,5 @@
 package es.zed.application.service;
 
-import es.zed.config.PokeAuthentication;
 import es.zed.domain.input.PokeDbInputPort;
 import es.zed.domain.output.api.PokeDbOutputPort;
 import es.zed.domain.output.object.PokemonObject;
@@ -10,6 +9,7 @@ import es.zed.dto.response.PokemonResponseDto;
 import es.zed.infrastructure.adapter.PokemonRepositoryAdapter;
 import es.zed.respmodel.ReqRespModel;
 import es.zed.security.JwtService;
+import es.zed.security.PokeAuthentication;
 import es.zed.shared.utils.Constants;
 import es.zed.utils.CustomObjectMapper;
 import java.util.HashMap;
@@ -79,6 +79,7 @@ public class PokemonDbService implements PokeDbInputPort {
    * Get ability.
    *
    * @param nid nid.
+   * @param auth auth.
    * @return response.
    */
   @Override
