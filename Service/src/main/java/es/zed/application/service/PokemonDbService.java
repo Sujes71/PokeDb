@@ -60,7 +60,7 @@ public class PokemonDbService implements PokeDbInputPort {
    *
    * @return response.
    */
-  @PreAuthorize("hasAuthority('ADMIN')")
+  @PreAuthorize(Constants.API_AUTHORITIES)
   @Override
   public Mono<ResponseEntity<ReqRespModel<PokemonResponseDto>>> getPokemon() {
     Flux<PokemonObject> pokemonObject = pokemonRepositoryAdapter

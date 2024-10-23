@@ -39,4 +39,9 @@ public class Constants {
    * nid.
    */
   public static final String NID_URL_FILTER = "{nid}";
+
+  /**
+   * Api authorities.
+   */
+  public static final String API_AUTHORITIES = "hasAuthority('ADMIN')";
 }
