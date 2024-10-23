@@ -3,9 +3,11 @@ package es.zed.infrastructure.controller;
 import es.zed.domain.input.PokeDbInputPort;
 import es.zed.dto.response.AbilityResponseDto;
 import es.zed.dto.response.PokemonResponseDto;
+import es.zed.respmodel.ReqRespModel;
 import es.zed.shared.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -32,7 +34,7 @@ public class PokeDbController {
    * @return the pokemon.
    */
   @GetMapping(path = Constants.POKE_DB_POKEMON, produces = MediaType.APPLICATION_JSON_VALUE)
-  private Mono<PokemonResponseDto> getPokemon() {
+  private Mono<ResponseEntity<ReqRespModel<PokemonResponseDto>>> getPokemon() {
     return pokeDbInputPort.getPokemon();
   }
 
@@ -44,7 +46,7 @@ public class PokeDbController {
    * @return the pokemon.
    */
   @GetMapping(path = Constants.POKE_DB_ABILITY_NID, produces = MediaType.APPLICATION_JSON_VALUE)
-  private AbilityResponseDto getAbility(@PathVariable final String nid,
+  private ResponseEntity<ReqRespModel<AbilityResponseDto>> getAbility(@PathVariable final String nid,
       @RequestHeader(name = "Authorization") String auth) {
     return pokeDbInputPort.getAbility(nid, auth);
   }

@@ -79,7 +79,7 @@ public class PokeLoginService implements PokeLoginInputPort {
                     new LinkedList<>()
                 ));
 
-                return Mono.just(ResponseEntity.ok(new ReqRespModel<String>(token, null)));
+                return Mono.just(ResponseEntity.ok(new ReqRespModel<String>(token, "Success")));
               });
         })
         .switchIfEmpty(Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED)

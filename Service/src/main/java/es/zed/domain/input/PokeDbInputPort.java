@@ -2,6 +2,8 @@ package es.zed.domain.input;
 
 import es.zed.dto.response.AbilityResponseDto;
 import es.zed.dto.response.PokemonResponseDto;
+import es.zed.respmodel.ReqRespModel;
+import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;
 
 /**
@@ -14,7 +16,7 @@ public interface PokeDbInputPort {
    *
    * @return response.
    */
-  Mono<PokemonResponseDto> getPokemon();
+  Mono<ResponseEntity<ReqRespModel<PokemonResponseDto>>> getPokemon();
 
   /**
    * Get ability.
@@ -23,6 +25,6 @@ public interface PokeDbInputPort {
    * @param auth auth.
    * @return response.
    */
-  AbilityResponseDto getAbility(final String nid, final String auth);
+  ResponseEntity<ReqRespModel<AbilityResponseDto>> getAbility(final String nid, final String auth);
 
 }

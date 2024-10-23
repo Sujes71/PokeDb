@@ -7,12 +7,14 @@ import es.zed.dto.PokemonDto;
 import es.zed.dto.response.AbilityResponseDto;
 import es.zed.dto.response.PokemonResponseDto;
 import es.zed.infrastructure.adapter.PokemonRepositoryAdapter;
+import es.zed.respmodel.ReqRespModel;
 import es.zed.shared.utils.Constants;
 import es.zed.utils.CustomObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -53,12 +55,17 @@ public class PokemonDbService implements PokeDbInputPort {
    */
   @PreAuthorize("hasAuthority('ADMIN')")
   @Override
-  public Mono<PokemonResponseDto> getPokemon() {
-    Flux<PokemonObject> pokemonObject = pokemonRepositoryAdapter.findAll().map(PokemonObject::fromEntityToObject);
+  public Mono<ResponseEntity<ReqRespModel<PokemonResponseDto>>> getPokemon() {
+    Flux<PokemonObject> pokemonObject = pokemonRepositoryAdapter
+        .findAll()
+        .map(PokemonObject::fromEntityToObject);
+
     return pokemonObject
         .map(pokemonEntity -> mapper.convertValue(pokemonEntity, PokemonDto.class))
         .collectList()
-        .map(PokemonResponseDto::new);
+        .map(PokemonResponseDto::new)
+        .map(pokemonResponse -> new ReqRespModel<>(pokemonResponse, "Success"))
+        .map(ResponseEntity::ok);
   }
 
   /**
@@ -68,12 +75,10 @@ public class PokemonDbService implements PokeDbInputPort {
    * @return response.
    */
   @Override
-  public AbilityResponseDto getAbility(final String nid, final String auth) {
+  public ResponseEntity<ReqRespModel<AbilityResponseDto>> getAbility(final String nid, final String auth) {
     Map<String, String> replacements = new HashMap<>();
     replacements.put(Constants.NID_URL_FILTER, nid);
-
-    return pokeDbOutputPort.doCallGetPokemon(mapper.mapUrl(replacements,
-        basePath.concat(Constants.POKE_DB_POKEMON_NID)), auth);
+    return ResponseEntity.ok(new ReqRespModel<>(pokeDbOutputPort.doCallGetInternalPokemon(
+        mapper.mapUrl(replacements, basePath.concat(Constants.POKE_DB_POKEMON_NID)), auth), "Success"));
   }
-
 }
