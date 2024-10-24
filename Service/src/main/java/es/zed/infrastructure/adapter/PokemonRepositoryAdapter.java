@@ -39,6 +39,34 @@ public class PokemonRepositoryAdapter {
   }
 
   /**
+   * Update pokemon.
+   *
+   * @param pokemonObject pokemon object.
+   */
+  public void update(PokemonObject pokemonObject) {
+    if (pokemonObject.getId() == null) {
+      log.error("Cannot update Pokemon: ID is null");
+      return;
+    }
+
+    pokemonRepository.findById(pokemonObject.getId())
+        .flatMap(existingPokemon -> pokemonRepository.updateNameByNativeId(pokemonObject.getId(), pokemonObject.getName()))
+        .doOnSuccess(updatedPokemon -> {
+          if (updatedPokemon != null) {
+            log.info("Pokemon updated successfully: {}", updatedPokemon);
+          }
+        })
+        .doOnError(ex -> log.error("Error updating pokemon: {}", ex.getMessage()))
+        .switchIfEmpty(Mono.fromRunnable(() -> log.warn("No Pokemon found with ID: {}", pokemonObject.getId())))
+        .subscribe();
+  }
+
+
+
+
+
+
+  /**
    * Find all pokemon.
    *
    * @return findAll.

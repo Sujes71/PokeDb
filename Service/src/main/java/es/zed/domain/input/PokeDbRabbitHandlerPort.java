@@ -5,7 +5,7 @@ import es.zed.pokeapi.PokeCreatedEvent;
 /**
  * poke db handler port.
  */
-public interface PokeDbHandlerPort {
+public interface PokeDbRabbitHandlerPort {
 
   /**
    * PokeCreatedEvent handler.

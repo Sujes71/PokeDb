@@ -1,6 +1,6 @@
 package es.zed.application.handler;
 
-import es.zed.domain.input.PokeDbHandlerPort;
+import es.zed.domain.input.PokeDbRabbitHandlerPort;
 import es.zed.domain.output.object.PokemonObject;
 import es.zed.infrastructure.adapter.PokemonRepositoryAdapter;
 import es.zed.pokeapi.PokeCreatedEvent;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class PokeDbEventHandler implements PokeDbHandlerPort {
+public class PokeDbRabbitEventHandler implements PokeDbRabbitHandlerPort {
 
   /**
    * Pokemon repository adapter.

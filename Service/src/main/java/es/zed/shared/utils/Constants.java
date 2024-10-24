@@ -44,4 +44,19 @@ public class Constants {
    * Api authorities.
    */
   public static final String API_AUTHORITIES = "hasAuthority('ADMIN')";
+
+  /**
+   * Kafka group id.
+   */
+  public static final String KAFKA_GROUP_ID = "PokeDb";
+
+  /**
+   * Poke created event.
+   */
+  public static final String POKE_CREATED_EVENT = "event.PokeCreatedEvent";
+
+  /**
+   * Poke updated event.
+   */
+  public static final String POKE_UPDATED_EVENT = "event.PokeUpdatedEvent";
 }
