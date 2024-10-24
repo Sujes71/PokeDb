@@ -62,7 +62,6 @@ public class PokeLoginService implements PokeLoginInputPort {
   public Mono<ResponseEntity<ReqRespModel<String>>> login(LoginRequestDto requestDto) {
     return userRepository.findById(requestDto.getUsername())
         .flatMap(user -> {
-          // Verificación de la contraseña
           if (!user.getPassword().equals(requestDto.getPassword())) {
             return Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(new ReqRespModel<String>(null, "Invalid Credentials")));
