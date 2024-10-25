@@ -51,12 +51,12 @@ public class Constants {
   public static final String KAFKA_GROUP_ID = "PokeDb";
 
   /**
-   * Poke created event.
-   */
-  public static final String POKE_CREATED_EVENT = "event.PokeCreatedEvent";
-
-  /**
    * Poke updated event.
    */
   public static final String POKE_UPDATED_EVENT = "event.PokeUpdatedEvent";
+
+  /**
+   * Kafka.
+   */
+  public static final String KAFKA_MANAGER = "KAFKA";
 }
