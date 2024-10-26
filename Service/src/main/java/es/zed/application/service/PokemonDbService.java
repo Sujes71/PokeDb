@@ -7,7 +7,6 @@ import es.zed.dto.PokemonDto;
 import es.zed.dto.response.AbilityResponseDto;
 import es.zed.dto.response.PokemonResponseDto;
 import es.zed.infrastructure.adapter.PokemonRepositoryAdapter;
-import es.zed.respmodel.ReqRespModel;
 import es.zed.security.JwtService;
 import es.zed.security.PokeAuthentication;
 import es.zed.shared.utils.Constants;
@@ -16,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -61,8 +60,9 @@ public class PokemonDbService implements PokeDbInputPort {
    * @return response.
    */
   @PreAuthorize(Constants.API_AUTHORITIES)
+  @Cacheable(value = Constants.POKE_CACHE, key = Constants.ALL_DB_POKEMON_CACHE)
   @Override
-  public Mono<ResponseEntity<ReqRespModel<PokemonResponseDto>>> getPokemon() {
+  public Mono<PokemonResponseDto> getPokemon() {
     Flux<PokemonObject> pokemonObject = pokemonRepositoryAdapter
         .findAll()
         .map(PokemonObject::fromEntityToObject);
@@ -70,9 +70,7 @@ public class PokemonDbService implements PokeDbInputPort {
     return pokemonObject
         .map(pokemonEntity -> mapper.convertValue(pokemonEntity, PokemonDto.class))
         .collectList()
-        .map(PokemonResponseDto::new)
-        .map(pokemonResponse -> new ReqRespModel<>(pokemonResponse, "Success"))
-        .map(ResponseEntity::ok);
+        .map(PokemonResponseDto::new);
   }
 
   /**
@@ -82,12 +80,13 @@ public class PokemonDbService implements PokeDbInputPort {
    * @param auth auth.
    * @return response.
    */
+  @Cacheable(value = Constants.POKE_CACHE, key = Constants.AB_NID_CACHE)
   @Override
-  public ResponseEntity<ReqRespModel<AbilityResponseDto>> getAbility(final String nid, final PokeAuthentication auth) {
+  public AbilityResponseDto getAbility(final String nid, final PokeAuthentication auth) {
     Map<String, String> replacements = new HashMap<>();
     replacements.put(Constants.NID_URL_FILTER, nid);
-    return ResponseEntity.ok(new ReqRespModel<>(pokeDbOutputPort.doCallGetInternalPokemon(
+    return pokeDbOutputPort.doCallGetInternalPokemon(
         mapper.mapUrl(replacements, basePath.concat(Constants.POKE_DB_POKEMON_NID)),
-        jwtService.createJwtFromSpec(auth.getJwtBearerToken())), "Success"));
+        jwtService.createJwtFromSpec(auth.getJwtBearerToken()));
   }
 }

@@ -59,4 +59,19 @@ public class Constants {
    * Kafka.
    */
   public static final String KAFKA_MANAGER = "KAFKA";
+
+  /**
+   * All db pokemon cache.
+   */
+  public static final String ALL_DB_POKEMON_CACHE = "'AllDbPokemon'";
+
+  /**
+   * Poke cache.
+   */
+  public static final String POKE_CACHE = "PokeCache";
+
+  /**
+   * AB nid caches.
+   */
+  public static final String AB_NID_CACHE = "'Ab' + #nid";
 }

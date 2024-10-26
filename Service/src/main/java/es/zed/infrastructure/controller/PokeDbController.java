@@ -35,7 +35,9 @@ public class PokeDbController {
    */
   @GetMapping(path = Constants.POKE_DB_POKEMON, produces = MediaType.APPLICATION_JSON_VALUE)
   private Mono<ResponseEntity<ReqRespModel<PokemonResponseDto>>> getPokemon() {
-    return pokeDbInputPort.getPokemon();
+    return pokeDbInputPort.getPokemon()
+        .map(pokemonResponse -> new ReqRespModel<>(pokemonResponse, "Success"))
+        .map(ResponseEntity::ok);
   }
 
   /**
@@ -48,6 +50,6 @@ public class PokeDbController {
   @GetMapping(path = Constants.POKE_DB_ABILITY_NID, produces = MediaType.APPLICATION_JSON_VALUE)
   private ResponseEntity<ReqRespModel<AbilityResponseDto>> getAbility(@PathVariable final String nid,
       final PokeAuthentication auth) {
-    return pokeDbInputPort.getAbility(nid, auth);
+    return ResponseEntity.ok(new ReqRespModel<>(pokeDbInputPort.getAbility(nid, auth), "Success"));
   }
 }
