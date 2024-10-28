@@ -21,9 +21,14 @@ public class Constants {
   public static final String POKE_DB_ABILITY = "/ability";
 
   /**
-   * pokemon url.
+   * login.
    */
   public static final String POKE_DB_LOGIN = "/login";
+
+  /**
+   * logout.
+   */
+  public static final String POKE_DB_LOGOUT = "/logout";
 
   /**
    * pokemon url.

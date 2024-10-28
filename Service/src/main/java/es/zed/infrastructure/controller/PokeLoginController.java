@@ -3,6 +3,7 @@ package es.zed.infrastructure.controller;
 import es.zed.domain.input.PokeLoginInputPort;
 import es.zed.dto.request.LoginRequestDto;
 import es.zed.respmodel.ReqRespModel;
+import es.zed.security.PokeAuthentication;
 import es.zed.shared.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -35,6 +36,17 @@ public class PokeLoginController {
   @PostMapping(path = Constants.POKE_DB_LOGIN, produces = MediaType.APPLICATION_JSON_VALUE)
   private Mono<ResponseEntity<ReqRespModel<String>>> login(@RequestBody LoginRequestDto loginRequestDto) {
     return pokeLoginInputPort.login(loginRequestDto);
+  }
+
+  /**
+   * Login controller.
+   *
+   * @param auth auth.
+   * @return response.
+   */
+  @PostMapping(path = Constants.POKE_DB_LOGOUT, produces = MediaType.APPLICATION_JSON_VALUE)
+  private Mono<ResponseEntity<ReqRespModel<String>>> logout(final PokeAuthentication auth) {
+    return pokeLoginInputPort.logout(auth);
   }
 
 
