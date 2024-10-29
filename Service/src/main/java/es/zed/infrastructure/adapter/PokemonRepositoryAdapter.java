@@ -61,11 +61,6 @@ public class PokemonRepositoryAdapter {
         .subscribe();
   }
 
-
-
-
-
-
   /**
    * Find all pokemon.
    *
